@@ -11,10 +11,11 @@
 # ###############################################
 cmake_minimum_required(VERSION 2.8)
 project(SPARK_Irrlicht)
-set(SPARK_IRRLICHT_LIB "" CACHE STRING "Store the name of the Irrlicht library file (release)")
-set(SPARK_IRRLICHT_LIB_DEBUG "" CACHE STRING "Store the name of the Irrlicht library file (debug)")
-set(SPARK_IRRLICHT_INCLUDE_DIR "" CACHE PATH "Store the path to the 'include' folder of Irrlicht")
-set(SPARK_IRRLICHT_LIB_DIR "" CACHE PATH "Store the path to the library folder of Irrlicht, ie 'lib/<config>'")
+set(DEFAULT_IRRLICHT_DIR ../../../external/irrlicht)
+set(SPARK_IRRLICHT_LIB "Irrlicht.lib" CACHE STRING "Store the name of the Irrlicht library file (release)")
+set(SPARK_IRRLICHT_LIB_DEBUG "Irrlicht.lib" CACHE STRING "Store the name of the Irrlicht library file (debug)")
+set(SPARK_IRRLICHT_INCLUDE_DIR ${DEFAULT_IRRLICHT_DIR}/include CACHE PATH "Store the path to the 'include' folder of Irrlicht")
+set(SPARK_IRRLICHT_LIB_DIR ${DEFAULT_IRRLICHT_DIR}/${LIB_DIR_NAME} CACHE PATH "Store the path to the library folder of Irrlicht, ie 'lib/<config>'")
 
 
 
@@ -39,6 +40,7 @@ endif()
 set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR}${SPARK_GENERATOR_POSTFIX})")
 include_directories(${SPARK_DIR}/include)
 include_directories(${SPARK_IRRLICHT_INCLUDE_DIR})
+get_filename_component(SPARK_IRRLICHT_LIB_DIR ${SPARK_IRRLICHT_LIB_DIR} REALPATH)
 link_directories(${SPARK_IRRLICHT_LIB_DIR})
 if(${SPARK_STATIC_BUILD})
 	set(SPARK_OUTPUT_TYPE static)

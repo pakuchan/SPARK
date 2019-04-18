@@ -11,10 +11,11 @@
 # ###############################################
 cmake_minimum_required(VERSION 2.8)
 project(Test_Irrlicht_Ctrl)
-set(DEMOS_IRRLICHT_LIB "" CACHE STRING "Store the name of the Irrlicht library file (release)")
-set(DEMOS_IRRLICHT_LIB_DEBUG "" CACHE STRING "Store the name of the Irrlicht library file (debug)")
-set(DEMOS_IRRLICHT_INCLUDE_DIR "" CACHE PATH "Store the path to the 'include' folder of Irrlicht")
-set(DEMOS_IRRLICHT_LIB_DIR "" CACHE PATH "Store the path to the library folder of Irrlicht, ie 'lib/<config>'")
+set(DEFAULT_IRRLICHT_DIR ../../../external/irrlicht)
+set(DEMOS_IRRLICHT_LIB "Irrlicht.lib" CACHE STRING "Store the name of the Irrlicht library file (release)")
+set(DEMOS_IRRLICHT_LIB_DEBUG "Irrlicht.lib" CACHE STRING "Store the name of the Irrlicht library file (debug)")
+set(DEMOS_IRRLICHT_INCLUDE_DIR ${DEFAULT_IRRLICHT_DIR}/include CACHE PATH "Store the path to the 'include' folder of Irrlicht")
+set(DEMOS_IRRLICHT_LIB_DIR ${DEFAULT_IRRLICHT_DIR}/${LIB_DIR_NAME} CACHE PATH "Store the path to the library folder of Irrlicht, ie 'lib/<config>'")
 
 
 
@@ -38,6 +39,7 @@ set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR}${SPARK_GENERATOR_P
 add_definitions(-DSPK_IMPORT)
 include_directories(${SPARK_DIR}/include)
 include_directories(${DEMOS_IRRLICHT_INCLUDE_DIR})
+get_filename_component(DEMOS_IRRLICHT_LIB_DIR ${DEMOS_IRRLICHT_LIB_DIR} REALPATH)
 link_directories(${DEMOS_IRRLICHT_LIB_DIR})
 if(${DEMOS_USE_STATIC_LIBS})
 	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/static)
