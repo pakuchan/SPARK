@@ -11,8 +11,13 @@
 # ###############################################
 cmake_minimum_required(VERSION 2.8)
 project(SPARK_DirectX9)
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set(DEFAULT_SPARK_DIRECTX_LIB_TYPE OFF)
+else()
+	set(DEFAULT_SPARK_DIRECTX_LIB_TYPE ON)
+endif()
 set(SPARK_DIRECTX_DIR "" CACHE PATH "Store the path to the DirectX SDK (folder containing 'Lib' and 'Include')")
-set(SPARK_DIRECTX_LIB_X86 ON CACHE BOOL "Store whether to use 32bits (ON) or 64bits (OFF) libraries of DirectX")
+set(SPARK_DIRECTX_LIB_X86 "${DEFAULT_SPARK_DIRECTX_LIB_TYPE}" CACHE BOOL "Store whether to use 32bits (ON) or 64bits (OFF) libraries of DirectX")
 
 
 
