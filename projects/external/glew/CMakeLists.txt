@@ -17,7 +17,10 @@ project(GLEW)
 # Sources
 # ###############################################
 set(SPARK_DIR ../../..)
-set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR})")
+if(NOT CMAKE_GENERATOR_PLATFORM STREQUAL "")
+	set(SPARK_GENERATOR_POSTFIX " ${CMAKE_GENERATOR_PLATFORM}")
+endif()
+set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR}${SPARK_GENERATOR_POSTFIX})")
 get_filename_component(SPARK_DIR ${SPARK_DIR}/void REALPATH)
 get_filename_component(SPARK_DIR ${SPARK_DIR} PATH)
 file(GLOB_RECURSE SRC_FILES

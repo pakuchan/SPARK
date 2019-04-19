@@ -33,7 +33,10 @@ file(GLOB_RECURSE SRC_FILES
 
 # Build step
 # ###############################################
-set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR})")
+if(NOT CMAKE_GENERATOR_PLATFORM STREQUAL "")
+	set(SPARK_GENERATOR_POSTFIX " ${CMAKE_GENERATOR_PLATFORM}")
+endif()
+set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR}${SPARK_GENERATOR_POSTFIX})")
 include_directories(${SPARK_DIR}/include)
 include_directories(${SPARK_IRRLICHT_INCLUDE_DIR})
 link_directories(${SPARK_IRRLICHT_LIB_DIR})

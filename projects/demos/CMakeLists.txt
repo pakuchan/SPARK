@@ -13,6 +13,16 @@ cmake_minimum_required(VERSION 2.8)
 project(SPARK_Demos)
 set(DEMOS_USE_STATIC_LIBS OFF CACHE BOOL "Store whether to link against static (ON) or dynamic (OFF) SPARK libraries")
 set(DEMOS_USE_IRRLICHT OFF CACHE BOOL "Store whether to include Irrlicht demos")
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set(BIN_DIR_NAME bin64)
+	set(LIB_DIR_NAME lib64)
+	if(MSVC)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
+	endif()
+else()
+	set(BIN_DIR_NAME bin)
+	set(LIB_DIR_NAME lib)
+endif()
 
 
 

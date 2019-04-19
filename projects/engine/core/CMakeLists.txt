@@ -58,7 +58,10 @@ source_group(Headers FILES
 
 # Build step
 # ###############################################
-set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR})")
+if(NOT CMAKE_GENERATOR_PLATFORM STREQUAL "")
+	set(SPARK_GENERATOR_POSTFIX " ${CMAKE_GENERATOR_PLATFORM}")
+endif()
+set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR}${SPARK_GENERATOR_POSTFIX})")
 include_directories(${SPARK_DIR}/include)
 include_directories(${SPARK_DIR}/external/pugixml/src)
 link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/external/pugixml)
