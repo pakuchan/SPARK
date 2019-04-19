@@ -28,7 +28,7 @@ namespace SPK
 {
 namespace GL
 {
-	GLLineTrailRenderer::GLLineTrailRenderer(size_t nbSamples,float duration,float width) :
+	GLLineTrailRenderer::GLLineTrailRenderer(uint32 nbSamples,float duration,float width) :
 		GLRenderer(true),
 		width(width),
 		degeneratedColor(0x00000000)
@@ -45,9 +45,9 @@ namespace GL
 		duration(renderer.duration)
 	{}
 
-	void GLLineTrailRenderer::setNbSamples(size_t nbSamples)
+	void GLLineTrailRenderer::setNbSamples(uint32 nbSamples)
 	{
-		SPK_ASSERT(nbSamples >= 2,"GLLineTrailRenderer::setNbSamples(size_t) - The number of samples cannot be less than 2");
+		SPK_ASSERT(nbSamples >= 2,"GLLineTrailRenderer::setNbSamples(uint32) - The number of samples cannot be less than 2");
 		this->nbSamples = nbSamples;
 	}
 
@@ -89,7 +89,7 @@ namespace GL
 
 	void GLLineTrailRenderer::init(const Particle& particle,DataSet* dataSet) const
 	{
-		size_t index = particle.getIndex();
+		uint32 index = particle.getIndex();
 		Vector3D* vertexIt = SPK_GET_DATA(Vector3DArrayData,dataSet,VERTEX_BUFFER_INDEX).getParticleData(index);
 		Color* colorIt = SPK_GET_DATA(ColorArrayData,dataSet,COLOR_BUFFER_INDEX).getParticleData(index);
 		float* ageIt = SPK_GET_DATA(FloatArrayData,dataSet,AGE_DATA_INDEX).getParticleData(index);
@@ -101,21 +101,21 @@ namespace GL
 		float age = particle.getAge();
 
 		// Inits position
-		for (size_t i = 0; i < nbSamples + 2; ++i)
+		for (uint32 i = 0; i < nbSamples + 2; ++i)
 			*(vertexIt++) = pos;
 
 		// Inits color
 		*(colorIt++) = degeneratedColor; // degenerate pre vertex
-		for (size_t i = 0; i < nbSamples; ++i)
+		for (uint32 i = 0; i < nbSamples; ++i)
 			*(colorIt++) = color;
 		*colorIt = degeneratedColor; // degenerate post vertex
 
 		// Inits age
-		for (size_t i = 0; i < nbSamples; ++i)
+		for (uint32 i = 0; i < nbSamples; ++i)
 			*(ageIt++) = age;
 
 		// Inits start alpha
-		for (size_t i = 0; i < nbSamples; ++i)
+		for (uint32 i = 0; i < nbSamples; ++i)
 			*(startAlphaIt++) = color.a;
 	}
 
@@ -155,7 +155,7 @@ namespace GL
 			*(ageIt++) = age;
 
 			// Updates alpha
-			for (size_t i = 0; i < nbSamples - 1; ++i)
+			for (uint32 i = 0; i < nbSamples - 1; ++i)
 			{
 				float ratio = 1.0f - (age - *(ageIt++)) / duration;
 				(colorIt++)->a = static_cast<unsigned char>(*(startAlphaIt++) * (ratio > 0.0f ? ratio : 0.0f));
@@ -184,7 +184,7 @@ namespace GL
 		glVertexPointer(3,GL_FLOAT,0,vertexBuffer);
 		glColorPointer(4,GL_UNSIGNED_BYTE,0,colorBuffer);
 
-		glDrawArrays(GL_LINE_STRIP,0,group.getNbParticles() * (nbSamples + 2));
+		glDrawArrays(GL_LINE_STRIP,0,static_cast<GLsizei>(group.getNbParticles()) * (nbSamples + 2));
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
@@ -197,7 +197,7 @@ namespace GL
 		for (ConstGroupIterator particleIt(group); !particleIt.end(); ++particleIt)
 		{
 			++vertexIt; // skips pre degenerated vertex
-			for (size_t i = 0; i < nbSamples; ++i)
+			for (uint32 i = 0; i < nbSamples; ++i)
 			{
 				AABBMin.setMin(*vertexIt);
 				AABBMax.setMax(*vertexIt);

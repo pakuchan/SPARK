@@ -42,13 +42,13 @@ namespace DX9
 	{
 		SPK_ASSERT(nbVertices > 0,"DX9Buffer::DX9Buffer(BufferInfo) - The number of vertices cannot be 0");
 
-		DX9Info::getDevice()->CreateVertexBuffer(nbVertices*sizeof(D3DXVECTOR3), D3DUSAGE_DYNAMIC, D3DFVF_XYZ, D3DPOOL_DEFAULT, &vertexBuffer, NULL);
-		DX9Info::getDevice()->CreateVertexBuffer(nbVertices*sizeof(D3DCOLOR), D3DUSAGE_DYNAMIC, D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &colorBuffer, NULL);
+		DX9Info::getDevice()->CreateVertexBuffer(static_cast<UINT>(nbVertices)*sizeof(D3DXVECTOR3), D3DUSAGE_DYNAMIC, D3DFVF_XYZ, D3DPOOL_DEFAULT, &vertexBuffer, NULL);
+		DX9Info::getDevice()->CreateVertexBuffer(static_cast<UINT>(nbVertices)*sizeof(D3DCOLOR), D3DUSAGE_DYNAMIC, D3DFVF_DIFFUSE, D3DPOOL_DEFAULT, &colorBuffer, NULL);
 
 		// TODO : gérer les indices 32bit
 		if( nbIndices > 0 )
 		{
-			DX9Info::getDevice()->CreateIndexBuffer(nbIndices*sizeof(short), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &indexBuffer, 0);
+			DX9Info::getDevice()->CreateIndexBuffer(static_cast<UINT>(nbIndices)*sizeof(short), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &indexBuffer, 0);
 
 			unsigned int offsetIndex = 0;
 
@@ -79,7 +79,7 @@ namespace DX9
 
 		// TODO : gérer autre chose que les textures 2D
 		if(nbTexCoords > 0)
-			DX9Info::getDevice()->CreateVertexBuffer(nbVertices*sizeof(D3DXVECTOR2), D3DUSAGE_DYNAMIC, D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE1(nbTexCoords), D3DPOOL_DEFAULT, &texCoordBuffer, NULL);
+			DX9Info::getDevice()->CreateVertexBuffer(static_cast<UINT>(nbVertices)*sizeof(D3DXVECTOR2), D3DUSAGE_DYNAMIC, D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE1(nbTexCoords), D3DPOOL_DEFAULT, &texCoordBuffer, NULL);
 	}
 
 	DX9Buffer::~DX9Buffer()
@@ -97,28 +97,28 @@ namespace DX9
 			nbTexCoords = nb;
 			SAFE_RELEASE( texCoordBuffer );
 			if (nbTexCoords > 0)
-				DX9Info::getDevice()->CreateVertexBuffer(nbVertices*nbTexCoords*sizeof(float), D3DUSAGE_DYNAMIC, D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE1(nbTexCoords), D3DPOOL_DEFAULT, &texCoordBuffer, NULL);
+				DX9Info::getDevice()->CreateVertexBuffer(static_cast<UINT>(nbVertices)*static_cast<UINT>(nbTexCoords)*sizeof(float), D3DUSAGE_DYNAMIC, D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE1((UINT)nbTexCoords), D3DPOOL_DEFAULT, &texCoordBuffer, NULL);
 			currentTexCoordIndex = 0;
 		}
 	}
 
 	void DX9Buffer::render(D3DPRIMITIVETYPE primitive, size_t nbPrimitives)
 	{
-		DX9Info::getDevice()->SetVertexDeclaration(DX9Info::getDecl(nbTexCoords));
+		DX9Info::getDevice()->SetVertexDeclaration(DX9Info::getDecl(static_cast<unsigned int>(nbTexCoords)));
 
 		DX9Info::getDevice()->SetStreamSource(0, vertexBuffer, 0, sizeof(D3DXVECTOR3));
 		DX9Info::getDevice()->SetStreamSource(1, colorBuffer, 0, sizeof(D3DCOLOR));
 
 		if( nbTexCoords > 0 )
-			DX9Info::getDevice()->SetStreamSource(2, texCoordBuffer, 0, nbTexCoords*sizeof(float));
+			DX9Info::getDevice()->SetStreamSource(2, texCoordBuffer, 0, static_cast<UINT>(nbTexCoords)*sizeof(float));
 
 		// TODO : DrawPrimitive prend PrimitiveCount, pas nbVertices !!!
 		if( nbIndices == 0 )
-			DX9Info::getDevice()->DrawPrimitive(primitive, 0, nbPrimitives);
+			DX9Info::getDevice()->DrawPrimitive(primitive, 0, static_cast<UINT>(nbPrimitives));
 		else
 		{
 			DX9Info::getDevice()->SetIndices(indexBuffer);
-			DX9Info::getDevice()->DrawIndexedPrimitive(primitive, 0, 0, nbPrimitives<<2, 0, nbPrimitives<<1);
+			DX9Info::getDevice()->DrawIndexedPrimitive(primitive, 0, 0, static_cast<UINT>(nbPrimitives)<<2, 0, (UINT)nbPrimitives<<1);
 		}
 	}
 }}

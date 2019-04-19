@@ -60,7 +60,7 @@ namespace SPK
 		///////////////
 
 		/** @brief The number of floats held by a transform */
-		static const size_t TRANSFORM_LENGTH = 16;
+		static const uint32 TRANSFORM_LENGTH = 16;
 
 		/** @brief The identity matrix */
 		static const float IDENTITY[TRANSFORM_LENGTH];
@@ -464,12 +464,12 @@ namespace SPK
 	{
 		// naive matrix multiplication approach
 		// warning : no self assignment !
-		for (size_t i = 0; i < 4; ++i)
+		for (uint32 i = 0; i < 4; ++i)
 		{
-			for (size_t j = 0; j < 4; ++j)
+			for (uint32 j = 0; j < 4; ++j)
 			{
 				dest[(i << 2) + j] = 0.0f;
-				for (size_t k = 0; k < 4; ++k)
+				for (uint32 k = 0; k < 4; ++k)
 					dest[(i << 2) + j] += src0[(k << 2) + j] * src1[(i << 2) + k];
 			}
 		}

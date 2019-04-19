@@ -92,7 +92,7 @@ namespace GL
 				if (!group.isEnabled(PARAM_TEXTURE_INDEX))
 				{
 					float t[8] = {1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f};
-					for (size_t i = 0; i < group.getCapacity() << 3; ++i)
+					for (uint32 i = 0; i < group.getCapacity() << 3; ++i)
 						buffer.setNextTexCoord(t[i & 7]);
 				}
 			}
@@ -128,7 +128,7 @@ namespace GL
 			{
 				buffer.setNbTexCoords(3);
 				float t[12] =  {1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,1.0f,1.0f,0.0f};
-				for (size_t i = 0; i < group.getCapacity() * 12; ++i)
+				for (uint32 i = 0; i < group.getCapacity() * 12; ++i)
 					buffer.setNextTexCoord(t[i % 12]);
 			}
 

@@ -131,9 +131,9 @@ namespace SPK
 	private :
 
 		// Data indices
-		static const size_t NB_DATA = 2;
-		static const size_t FORCE_VECTOR_INDEX = 0;
-		static const size_t REMAINING_TIME_INDEX = 1;
+		static const uint32 NB_DATA = 2;
+		static const uint32 FORCE_VECTOR_INDEX = 0;
+		static const uint32 REMAINING_TIME_INDEX = 1;
 
 		Vector3D minVector;
 		Vector3D maxVector;

@@ -59,9 +59,9 @@ namespace SPK
 		SPK_LOG_WARNING("ActionSet::removeAction(const Ref<Action>&) - The action was not found in the action set and cannot be removed");
 	}
 
-	const Ref<Action>& ActionSet::getAction(size_t index) const
+	const Ref<Action>& ActionSet::getAction(uint32 index) const
 	{
-		SPK_ASSERT(index <= getNbActions(),"ActionSet::getAction(size_t) - Action index is out of bounds : " << index);
+		SPK_ASSERT(index <= getNbActions(),"ActionSet::getAction(uint32) - Action index is out of bounds : " << index);
 		return actions[index];
 	}
 

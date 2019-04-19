@@ -108,7 +108,7 @@ namespace IO
 		template<typename T>
 		void storeValue(const std::vector<Ref<T> >& value, Buffer& buffer)
 		{
-			buffer << value.size();
+			buffer << static_cast<uint32>(value.size());
 			for(unsigned int t = 0; t < value.size(); t++)
 				buffer << saver->context->refId(value[t].get());
 		}
@@ -236,7 +236,7 @@ namespace IO
 		// Header
 		context->buffer << SPKFormatVariables::MAGIC_NUMBER
 			<< SPKFormatVariables::VERSION
-			<< objRef.size();
+			<< static_cast<uint32>(objRef.size());
 		context->nbConnectionPosition = context->buffer.getPosition();
 		context->buffer << (unsigned int)0; // Number of connections will be known in the 2nd phase
 		context->buffer << (unsigned int)0; // Data-length is not already known

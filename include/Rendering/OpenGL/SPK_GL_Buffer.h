@@ -32,7 +32,7 @@ namespace GL
 	{
 	public :
 
-		GLBuffer(size_t nbVertices,size_t nbTexCoords = 0);
+		GLBuffer(uint32 nbVertices,uint32 nbTexCoords = 0);
 		~GLBuffer();
 
 		void positionAtStart();
@@ -40,28 +40,28 @@ namespace GL
 		void setNextVertex(const Vector3D& vertex);
 
 		void setNextColor(const Color& color);
-		void skipNextColors(size_t nb);
+		void skipNextColors(uint32 nb);
 
 		void setNextTexCoord(float texCoord);
-		void skipNextTexCoords(size_t nb);
+		void skipNextTexCoords(uint32 nb);
 
-		void setNbTexCoords(size_t nb);
-		size_t getNbTexCoords();
+		void setNbTexCoords(uint32 nb);
+		uint32 getNbTexCoords();
 
-		void render(GLuint primitive,size_t nbVertices);
+		void render(GLuint primitive,uint32 nbVertices);
 
 	private :
 
-		const size_t nbVertices;
-		size_t nbTexCoords;
+		const uint32 nbVertices;
+		uint32 nbTexCoords;
 
 		Vector3D* vertexBuffer;
 		Color* colorBuffer;
 		float* texCoordBuffer;
 
-		size_t currentVertexIndex;
-		size_t currentColorIndex;
-		size_t currentTexCoordIndex;
+		uint32 currentVertexIndex;
+		uint32 currentColorIndex;
+		uint32 currentTexCoordIndex;
 	};
 
 	inline void GLBuffer::positionAtStart()
@@ -81,7 +81,7 @@ namespace GL
 		colorBuffer[currentColorIndex++] = color;
 	}
 
-	inline void GLBuffer::skipNextColors(size_t nb)
+	inline void GLBuffer::skipNextColors(uint32 nb)
 	{
 		currentColorIndex += nb;
 	}
@@ -91,12 +91,12 @@ namespace GL
 		texCoordBuffer[currentTexCoordIndex++] = texCoord;
 	}
 
-	inline void GLBuffer::skipNextTexCoords(size_t nb)
+	inline void GLBuffer::skipNextTexCoords(uint32 nb)
 	{
 		currentTexCoordIndex += nb;
 	}
 
-	inline size_t GLBuffer::getNbTexCoords()
+	inline uint32 GLBuffer::getNbTexCoords()
 	{
 		return nbTexCoords;
 	}

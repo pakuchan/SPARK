@@ -58,11 +58,11 @@ namespace SPK
 
 			~Array<T>() { SPK_DELETE_ARRAY(values); }
 
-			size_t size() const					{ return currentNb; }
-			size_t capacity() const				{ return maxNb; }
+			uint32 size() const					{ return currentNb; }
+			uint32 capacity() const				{ return maxNb; }
 			bool empty() const					{ return currentNb == 0; }
-			T& operator[](size_t i)				{ return values[i]; }
-			const T& operator[](size_t i) const	{ return values[i]; }
+			T& operator[](uint32 i)				{ return values[i]; }
+			const T& operator[](uint32 i) const	{ return values[i]; }
 
 			void push(T t)
 			{
@@ -71,7 +71,7 @@ namespace SPK
 					// Reallocates
 					maxNb <<= 1;
 					T* tmp = SPK_NEW_ARRAY(T,maxNb);
-					for (size_t i = 0; i < currentNb; ++i)
+					for (uint32 i = 0; i < currentNb; ++i)
 						tmp[i] = values[i];
 					SPK_DELETE_ARRAY(values);
 					values = tmp;
@@ -84,11 +84,11 @@ namespace SPK
 
 		/*private*/public : // tmp workaround because I wasnt able to allows Cell to be friend of Array (compiler bug ?) but thats unsafe
 
-			size_t currentNb;
-			size_t maxNb;
+			uint32 currentNb;
+			uint32 maxNb;
 			T* values;
 
-			Array<T>(size_t maxNb = 1) :
+			Array<T>(uint32 maxNb = 1) :
 				currentNb(0),
 				maxNb(maxNb)
 			{
@@ -100,7 +100,7 @@ namespace SPK
 				maxNb(t.maxNb)
 			{
 				values = SPK_NEW_ARRAY(T,maxNb);
-				for (size_t i = 0; i < currentNb; ++i)
+				for (uint32 i = 0; i < currentNb; ++i)
 					values[i] = t.values[i];
 			} // Not called
 
@@ -114,7 +114,7 @@ namespace SPK
 					SPK_DELETE_ARRAY(values);
 					values = SPK_NEW_ARRAY(T,maxNb);
 				}
-				for (size_t i = 0; i < currentNb; ++i)
+				for (uint32 i = 0; i < currentNb; ++i)
 					values[i] = t.values[i];
 				return *this;
 			}
@@ -128,17 +128,17 @@ namespace SPK
 
 		public :
 
-			size_t level;
-			size_t offsetX;
-			size_t offsetY;
-			size_t offsetZ;
-			size_t children[8];
+			uint32 level;
+			uint32 offsetX;
+			uint32 offsetY;
+			uint32 offsetZ;
+			uint32 children[8];
 			bool hasChildren;
-			Array<size_t> particles;
+			Array<uint32> particles;
 
 		private :
 
-			void init(size_t level,size_t offsetX,size_t offsetY,size_t offsetZ)
+			void init(uint32 level,uint32 offsetX,uint32 offsetY,uint32 offsetZ)
 			{
 				this->level = level;
 				this->offsetX = offsetX;
@@ -148,7 +148,7 @@ namespace SPK
 				particles.clear();
 			}
 
-			Cell(size_t level = 0,size_t offsetX = 0,size_t offsetY = 0,size_t offsetZ = 0) :
+			Cell(uint32 level = 0,uint32 offsetX = 0,uint32 offsetY = 0,uint32 offsetZ = 0) :
 				level(level),
 				offsetX(offsetX),
 				offsetY(offsetY),
@@ -175,7 +175,7 @@ namespace SPK
 				offsetY = cell.offsetY;
 				offsetZ = cell.offsetZ;
 				hasChildren = cell.hasChildren;
-				std::memcpy(children,cell.children,8 * sizeof(size_t));
+				std::memcpy(children,cell.children,8 * sizeof(uint32));
 				particles = cell.particles;
 				return *this;
 			}
@@ -186,7 +186,7 @@ namespace SPK
 		* Active cells are cells of the octree that contains at least one particle
 		* @return active cells of the octree
 		*/
-		const Array<size_t>& getActiveCells() const							{ return activeCells; }
+		const Array<uint32>& getActiveCells() const							{ return activeCells; }
 
 		/**
 		* @brief Gets the neighboring cells of a given particle
@@ -196,14 +196,14 @@ namespace SPK
 		* @param particleIndex ; the index of the particle
 		* @return the neighboring cells of a given particle
 		*/
-		const Array<size_t>& getNeighborCells(size_t particleIndex) const	{ return particleCells[particleIndex]; }
+		const Array<uint32>& getNeighborCells(uint32 particleIndex) const	{ return particleCells[particleIndex]; }
 
 		/**
 		* @brief Gets a given cell by index
 		* @param index : the index of the cell
 		* @return the cell at the given index
 		*/
-		const Cell& getCell(size_t index) const								{ return cells[index]; }
+		const Cell& getCell(uint32 index) const								{ return cells[index]; }
 
 		/**
 		* @brief Gets the minimum position of the axis aligned bounding box of the octree
@@ -233,20 +233,20 @@ namespace SPK
 			}
 		};
 
-		static const size_t MAX_LEVEL_INDEX;
-		static const size_t MAX_PARTICLES_NB_PER_CELL;
+		static const uint32 MAX_LEVEL_INDEX;
+		static const uint32 MAX_PARTICLES_NB_PER_CELL;
 		static const float OPTIMAL_CELL_SIZE_FACTOR;
 		static const float MIN_CELL_SIZE;
 
 		Group& group;
 
 		Array<Cell> cells; // Pool of cells
-		size_t nbCells;
+		uint32 nbCells;
 
-		Array<size_t> activeCells; // Index of the active cells
+		Array<uint32> activeCells; // Index of the active cells
 
-		Array<size_t>* particleCells; // Cells to which particles belongs
-		size_t nbParticles;
+		Array<uint32>* particleCells; // Cells to which particles belongs
+		uint32 nbParticles;
 
 		Triplet* minPos;
 		Triplet* maxPos;
@@ -263,9 +263,9 @@ namespace SPK
 
 		void update();  // Used by Group only
 
-		size_t initNextCell(size_t level,size_t offsetX,size_t offsetY,size_t offsetZ);
-		void addToCell(size_t cellIndex,size_t particleIndex,size_t maxLevel);
-		void addToChildrenCells(size_t parentIndex,size_t particleIndex,size_t maxLevel);
+		uint32 initNextCell(uint32 level,uint32 offsetX,uint32 offsetY,uint32 offsetZ);
+		void addToCell(uint32 cellIndex,uint32 particleIndex,uint32 maxLevel);
+		void addToChildrenCells(uint32 parentIndex,uint32 particleIndex,uint32 maxLevel);
 	};
 }
 

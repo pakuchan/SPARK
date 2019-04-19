@@ -88,13 +88,13 @@ namespace SPK
 	/// TODO See whether it is useful. If no, then remove, if yes, fix it before commit
 	/*
 	template<typename T>
-	size_t getORedEnumValue(const std::string& enums)
+	uint32 getORedEnumValue(const std::string& enums)
 	{
-		size_t pos = 0;
-		size_t flag = 0;
+		uint32 pos = 0;
+		uint32 flag = 0;
 		while (pos < enums.size())
 		{
-			size_t startPos = pos;
+			uint32 startPos = pos;
 			pos = enums.find_first_of(" |",startPos);
 			if (pos == std::string::npos)
 				pos = enums.size();
@@ -121,7 +121,7 @@ namespace SPK
 	{
 		std::stringbuf buf;
 		bool hasOneORedEnum = false;
-		for (size_t i = 1; i < 32; ++i)
+		for (uint32 i = 1; i < 32; ++i)
 			if ((flag & (1 << i)) != 0)
 			{
 				std::string name = getEnumName(static_cast<T>(1 << i));

@@ -34,7 +34,7 @@ namespace IRR
 	{
 	public :
 
-		IRRBuffer(irr::IrrlichtDevice* device,size_t nbParticles,size_t nbVerticesPerParticle,size_t nbIndicesPerParticle);
+		IRRBuffer(irr::IrrlichtDevice* device,uint32 nbParticles,uint32 nbVerticesPerParticle,uint32 nbIndicesPerParticle);
 		~IRRBuffer();
 
 		irr::video::E_INDEX_TYPE getIndiceType() const;
@@ -45,29 +45,29 @@ namespace IRR
 		void setNextVertex(const Vector3D& vertex);
 
 		void setNextColor(const Color& color);
-		void skipNextColors(size_t nb);
+		void skipNextColors(uint32 nb);
 
 		void setNextTexCoords(float u,float v);
-		void skipNextTexCoords(size_t nb);
+		void skipNextTexCoords(uint32 nb);
 
 		irr::scene::IDynamicMeshBuffer& getMeshBuffer();
 		const irr::scene::IDynamicMeshBuffer& getMeshBuffer() const;
 
-		void setUsed(size_t nb);
+		void setUsed(uint32 nb);
 
 	private :
 
 		irr::scene::CDynamicMeshBuffer* meshBuffer;
 		irr::IrrlichtDevice* device;
 
-		size_t nbParticles;
-		size_t nbVerticesPerParticle;
-		size_t nbIndicesPerParticle;
+		uint32 nbParticles;
+		uint32 nbVerticesPerParticle;
+		uint32 nbIndicesPerParticle;
 
-		size_t currentIndexIndex;
-		size_t currentVertexIndex;
-		size_t currentColorIndex;
-		size_t currentTexCoordIndex;
+		uint32 currentIndexIndex;
+		uint32 currentVertexIndex;
+		uint32 currentColorIndex;
+		uint32 currentTexCoordIndex;
 	};
 
 	inline irr::video::E_INDEX_TYPE IRRBuffer::getIndiceType() const
@@ -101,7 +101,7 @@ namespace IRR
 		meshBuffer->getVertexBuffer()[currentColorIndex++].Color.set(color.getARGB());
 	}
 
-	inline void IRRBuffer::skipNextColors(size_t nb)
+	inline void IRRBuffer::skipNextColors(uint32 nb)
 	{
 		currentColorIndex += nb;
 	}
@@ -111,7 +111,7 @@ namespace IRR
 		meshBuffer->getVertexBuffer()[currentTexCoordIndex++].TCoords.set(u,v);
 	}
 
-	inline void IRRBuffer::skipNextTexCoords(size_t nb)
+	inline void IRRBuffer::skipNextTexCoords(uint32 nb)
 	{
 		currentTexCoordIndex += nb;
 	}

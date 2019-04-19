@@ -66,7 +66,7 @@ namespace DX9
 		* @brief Creates a new DX9LineTrailRenderer
 		* @return A new DX9LineTrailRenderer
 		*/
-		static  DX9LineTrailRenderer* create(size_t nbSamples = 8, float duration = 1.0f);
+		static  DX9LineTrailRenderer* create(uint32 nbSamples = 8, float duration = 1.0f);
 
 		virtual RenderBuffer* attachRenderBuffer(const Group& group) const;
 
@@ -82,13 +82,13 @@ namespace DX9
 		*
 		* @param nbSamples : the number of samples to construct the trails
 		*/
-		void setNbSamples(size_t nbSamples);
+		void setNbSamples(uint32 nbSamples);
 
 		/**
 		* @brief Gets the number of samples per trail
 		* @return the number of samples per trail
 		*/
-		size_t getNbSamples() const;
+		uint32 getNbSamples() const;
 
 		//////////////
 		// duration //
@@ -156,7 +156,7 @@ namespace DX9
 		static const size_t AGE_DATA_INDEX = 2;
 		static const size_t START_ALPHA_DATA_INDEX = 3;
 
-		size_t nbSamples;
+		uint32 nbSamples;
 
 		float width;
 		float duration;
@@ -167,7 +167,7 @@ namespace DX9
 		// Constructor //
 		/////////////////
 
-		DX9LineTrailRenderer(size_t nbSamples = 8, float duration = 1.0f, float width = 1.0f);
+		DX9LineTrailRenderer(uint32 nbSamples = 8, float duration = 1.0f, float width = 1.0f);
 		DX9LineTrailRenderer(const DX9LineTrailRenderer& renderer);
 
 		virtual void init(const Particle& particle, DataSet* dataSet) const;
@@ -177,12 +177,12 @@ namespace DX9
 		virtual void computeAABB(Vector3D& AABBMin, Vector3D& AABBMax, const Group& group, const DataSet* dataSet) const;
 	};
 
-	inline DX9LineTrailRenderer* DX9LineTrailRenderer::create(size_t nbSamples, float duration)
+	inline DX9LineTrailRenderer* DX9LineTrailRenderer::create(uint32 nbSamples, float duration)
 	{
 		return SPK_NEW(DX9LineTrailRenderer,nbSamples, duration, 1.0f);
 	}
 
-	inline size_t DX9LineTrailRenderer::getNbSamples() const
+	inline uint32 DX9LineTrailRenderer::getNbSamples() const
 	{
 		return nbSamples;
 	}

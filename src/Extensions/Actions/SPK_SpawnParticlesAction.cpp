@@ -113,7 +113,7 @@ namespace SPK
 
 	const Ref<Emitter>& SpawnParticlesAction::getNextAvailableEmitter() const
 	{
-		for (size_t i = 0; i < emitterPool.size(); ++i)
+		for (uint32 i = 0; i < emitterPool.size(); ++i)
 		{
 			emitterPool.push_back(emitterPool.front());
 			emitterPool.pop_front();

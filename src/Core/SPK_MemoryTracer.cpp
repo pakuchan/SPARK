@@ -53,7 +53,7 @@ namespace SPK
 
 		blocks.insert(info);
 
-		totalMemorySize += size;
+		totalMemorySize += static_cast<unsigned int>(size);
 		if (totalMemorySize > maxMemorySize)
 			maxMemorySize = totalMemorySize;
 
@@ -65,7 +65,7 @@ namespace SPK
 		std::set<BlockInfo>::iterator it = blocks.find(BlockInfo(position));
 		if (it != blocks.end())
 		{
-			totalMemorySize -= it->size;
+			totalMemorySize -= static_cast<unsigned int>(it->size);
 			blocks.erase(it);
 		}
 	}

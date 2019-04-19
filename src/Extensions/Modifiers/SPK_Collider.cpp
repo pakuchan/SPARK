@@ -47,19 +47,19 @@ namespace SPK
 			float radius0 = particle0.getParam(PARAM_SCALE);
 			float m0 = particle0.getParam(PARAM_MASS);
 
-			size_t index0 = particle0.getIndex();
+			uint32 index0 = particle0.getIndex();
 
-			const Octree::Array<size_t>& neighborCells = octree.getNeighborCells(index0);
-			size_t nbCells = neighborCells.size();
+			const Octree::Array<uint32>& neighborCells = octree.getNeighborCells(index0);
+			uint32 nbCells = neighborCells.size();
 
-			for (size_t i = 0; i < nbCells; ++i) // For each neighboring cell in the octree
+			for (uint32 i = 0; i < nbCells; ++i) // For each neighboring cell in the octree
 			{
 				const Octree::Cell& cell = octree.getCell(neighborCells[i]);
-				size_t nbParticleInCells = cell.particles.size();
+				uint32 nbParticleInCells = cell.particles.size();
 
-				for (size_t j = 0; j < nbParticleInCells; ++j) // for each particles in the cell
+				for (uint32 j = 0; j < nbParticleInCells; ++j) // for each particles in the cell
 				{
-					size_t index1 = cell.particles[j];
+					uint32 index1 = cell.particles[j];
 					if (index1 >= index0)
 						break; // as particle are ordered
 

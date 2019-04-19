@@ -23,6 +23,7 @@
 #define H_SPK_SYSTEM
 
 #include <vector>
+#include "SPK_DEF.h"
 
 // This define helps implement a wrapper for SPK::System by redirecting the methods
 #define SPK_IMPLEMENT_SYSTEM_WRAPPER \
@@ -31,13 +32,13 @@ private : \
 SPK::Ref<SPK::System> SPKSystem; \
 public : \
 const SPK::Ref<SPK::System>& getSPKSystem() { return SPKSystem; } \
-SPK::Ref<SPK::Group> createSPKGroup(size_t capacity) { return SPKSystem->createGroup(capacity); } \
+SPK::Ref<SPK::Group> createSPKGroup(SPK::uint32 capacity) { return SPKSystem->createGroup(capacity); } \
 SPK::Ref<SPK::Group> createSPKGroup(SPK::Ref<SPK::Group>& group) { return SPKSystem->createGroup(group); } \
 void addSPKGroup(SPK::Ref<SPK::Group>& group) { SPKSystem->addGroup(group); } \
 void removeSPKGroup(SPK::Ref<SPK::Group> group) { SPKSystem->removeGroup(group); } \
-SPK::Ref<SPK::Group> getSPKGroup(size_t index) const { return SPKSystem->getGroup(index); } \
-size_t getNbSPKGroups() const { return SPKSystem->getNbGroups(); } \
-size_t getNbParticles() const { return SPKSystem->getNbParticles(); } \
+SPK::Ref<SPK::Group> getSPKGroup(SPK::uint32 index) const { return SPKSystem->getGroup(index); } \
+SPK::uint32 getNbSPKGroups() const { return SPKSystem->getNbGroups(); } \
+SPK::uint32 getNbParticles() const { return SPKSystem->getNbParticles(); } \
 void initializeSPK() { SPKSystem->initialize(); } \
 bool isInitializedSPK() const { return SPKSystem->isInitialized(); }
 
@@ -91,12 +92,12 @@ namespace SPK
 		/**
 		* @brief Returns the i-th controller
 		*/
-		const Ref<Controller>& getController(size_t i) const;
+		const Ref<Controller>& getController(uint32 i) const;
 
 		/**
 		* @brief Returns the number of controllers in the system
 		*/
-		size_t getNbControllers() const;
+		uint32 getNbControllers() const;
 
 		///////////////////////
 		// Groups management //
@@ -106,7 +107,7 @@ namespace SPK
 		* @brief Adds a group to the system
 		* @param group : a pointer on the group to add to the system
 		*/
-		Ref<Group> createGroup(size_t capacity);
+		Ref<Group> createGroup(uint32 capacity);
 
 		/**
 		* @brief Adds a group to the system which is a copy of an existing group
@@ -135,19 +136,19 @@ namespace SPK
 		* @param index : the index of the group to get
 		* @return the group at index
 		*/
-		const Ref<Group>& getGroup(size_t index) const;
+		const Ref<Group>& getGroup(uint32 index) const;
 
 		/**
 		* @brief Gets the number of groups in the system
 		* @return the number of groups in the system
 		*/
-		size_t getNbGroups() const;
+		uint32 getNbGroups() const;
 
 		/**
 		* @brief Gets the number of particles in the system
 		* @return the number of particles in the system
 		*/
-		size_t getNbParticles() const;
+		uint32 getNbParticles() const;
 
 		/////////////////////////////
 		// Operations on particles //
@@ -360,9 +361,9 @@ namespace SPK
 		return SPK_NEW(System,initialize); 
 	}
 
-	inline const Ref<Group>& System::getGroup(size_t index) const
+	inline const Ref<Group>& System::getGroup(uint32 index) const
 	{
-		SPK_ASSERT(index < getNbGroups(),"System::getGroup(size_t) - Index of group is out of bounds : " << index);
+		SPK_ASSERT(index < getNbGroups(),"System::getGroup(uint32) - Index of group is out of bounds : " << index);
 		return groups[index];
 	}
 
@@ -371,9 +372,9 @@ namespace SPK
 		groups.clear();
 	}
 
-	inline size_t System::getNbGroups() const
+	inline uint32 System::getNbGroups() const
 	{
-		return groups.size();
+		return static_cast<uint32>(groups.size());
 	}
 
 	inline void System::addController(const Ref<Controller>& ctrl)
@@ -387,15 +388,15 @@ namespace SPK
 		controllers.clear();
 	}
 
-	inline const Ref<Controller>& System::getController(size_t i) const
+	inline const Ref<Controller>& System::getController(uint32 i) const
 	{
-		SPK_ASSERT(i < getNbControllers(),"System::getController(size_t) - Index of controller is out of bounds : " << i);
+		SPK_ASSERT(i < getNbControllers(),"System::getController(uint32) - Index of controller is out of bounds : " << i);
 		return controllers[i];
 	}
 
-	inline size_t System::getNbControllers() const
+	inline uint32 System::getNbControllers() const
 	{
-		return controllers.size();
+		return static_cast<uint32>(controllers.size());
 	}
 
 	inline void System::enableAABBComputation(bool AABB)

@@ -56,7 +56,7 @@ namespace SPK
 
 	void Transform::setNC(const float* transform)
 	{
-		for (size_t i = 0; i < TRANSFORM_LENGTH; ++i)
+		for (uint32 i = 0; i < TRANSFORM_LENGTH; ++i)
 			local[i] = transform[(i >> 2) + ((i & 3) << 2)];	// conversion
 
 		localIdentity = false;

@@ -245,8 +245,8 @@ namespace SPK
 		
 		void emit(Particle& particle) const;
 
-		size_t updateTankFromTime(float deltaTime);
-		size_t updateTankFromNb(size_t nb);
+		uint32 updateTankFromTime(float deltaTime);
+		uint32 updateTankFromNb(uint32 nb);
 
 		/**
 		* @brief Gives the particle an initial velocity
@@ -332,12 +332,12 @@ namespace SPK
 		full = f;
 	}
 
-	inline size_t Emitter::updateTankFromTime(float deltaTime)
+	inline uint32 Emitter::updateTankFromTime(float deltaTime)
 	{
 		if (deltaTime < 0.0f)
 			return 0;
 
-		size_t nbBorn;
+		uint32 nbBorn;
 		if (flow < 0.0f)
 		{
 			nbBorn = currentTank > 0 ? currentTank : 0;
@@ -346,10 +346,10 @@ namespace SPK
 		else if (currentTank != 0)
 		{
 			fraction += flow * deltaTime;
-			nbBorn = static_cast<size_t>(fraction);
+			nbBorn = static_cast<uint32>(fraction);
 			if (currentTank >= 0)
 			{
-				if (nbBorn > static_cast<size_t>(currentTank))
+				if (nbBorn > static_cast<uint32>(currentTank))
 					nbBorn = currentTank;
 				currentTank -= nbBorn;
 			}
@@ -360,12 +360,12 @@ namespace SPK
 		return nbBorn;
 	}
 
-	inline size_t  Emitter::updateTankFromNb(size_t nb)
+	inline uint32  Emitter::updateTankFromNb(uint32 nb)
 	{
 		if (currentTank < 0)
 			return nb;
 
-		if (nb > static_cast<size_t>(currentTank))
+		if (nb > static_cast<uint32>(currentTank))
 			nb = currentTank;
 		currentTank -= nb;
 		return nb;

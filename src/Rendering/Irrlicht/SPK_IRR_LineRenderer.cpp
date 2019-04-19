@@ -48,7 +48,7 @@ namespace IRR
 		buffer->positionAtStart();
 
 		// Initializes the index array
-		for (size_t i = 0; i < group.getCapacity() * NB_INDICES_PER_PARTICLE; ++i)
+		for (uint32 i = 0; i < group.getCapacity() * NB_INDICES_PER_PARTICLE; ++i)
 			buffer->setNextIndex(i);
 
 		buffer->getMeshBuffer().setDirty(irr::scene::EBT_INDEX);

@@ -132,7 +132,7 @@ namespace SPK
 
 	private :
 
-		static const size_t NB_ZONE_TESTS = 6;
+		static const uint32 NB_ZONE_TESTS = 6;
 		const int ZONE_TEST_FLAG;
 
 		Ref<Zone> zone;

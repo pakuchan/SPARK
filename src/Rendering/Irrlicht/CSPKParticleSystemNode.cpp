@@ -160,7 +160,7 @@ namespace scene
 
 	void CSPKParticleSystemNode::updateCameraPosition() const
 	{
-		for (size_t i = 0; i < SPKSystem->getNbGroups(); ++i)
+		for (SPK::uint32 i = 0; i < SPKSystem->getNbGroups(); ++i)
 		{
 			if (SPKSystem->getGroup(i)->isDistanceComputationEnabled())
 			{

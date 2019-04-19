@@ -204,8 +204,8 @@ namespace IO
 			std::string vec = attrib.attribute("value").value();
 			std::vector<T> value;
 			T buffer;
-			size_t pos = 0;
-			size_t next = vec.find(';');
+			uint32 pos = 0;
+			uint32 next = static_cast<uint32>(vec.find(';'));
 			if(next - pos > 1)
 			{
 				decodeValue(vec.substr(pos + 1, next - pos - 1), buffer);
@@ -214,7 +214,7 @@ namespace IO
 			pos = next;
 			while(pos != std::string::npos)
 			{
-				next = vec.find(';', pos + 1);
+				next = static_cast<uint32>(vec.find(';', pos + 1));
 				if(next - pos > 1)
 				{
 					decodeValue(vec.substr(pos + 1, next - pos - 1), buffer);

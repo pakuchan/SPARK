@@ -62,7 +62,7 @@ namespace SPK
 		{
 			SPK_LOG_WARNING("ZonedModifier::setZoneTest(ZoneTest) - This ZoneTest is not valid for this modifier");
 			bool validTestFound = false;
-			for (size_t i = 0; i < NB_ZONE_TESTS; ++i)
+			for (uint32 i = 0; i < NB_ZONE_TESTS; ++i)
 			{
 				if (((1 << i) & ZONE_TEST_FLAG) != 0)
 				{

@@ -121,7 +121,7 @@ namespace SPK
 	*
 	*/
 	template<typename T, class obj, typename Setter<T,obj>::type _add, typename Setter<T,obj>::type _remove,
-		void (obj::* _clear)(), typename Arg<T>::type (obj::* _getAt)(size_t) const, size_t (obj::* _getSize)() const,
+		void (obj::* _clear)(), typename Arg<T>::type (obj::* _getAt)(uint32) const, uint32 (obj::* _getSize)() const,
 		typename name, void* (*attrObj)(obj*)>
 	struct ArrayAttribute : public AttributeBase<std::vector<T>,obj,true,false,name>, public AttributeConnection<std::vector<T>, obj, ArrayAttribute<T, obj, _add, _remove, _clear, _getAt, _getSize, name, attrObj> >
 	{
@@ -135,14 +135,14 @@ namespace SPK
 		static void set(obj* object, const std::vector<T>& value)
 		{
 			(object->*_clear)();
-			for(size_t t = 0; t < value.size(); t++)
+			for(uint32 t = 0; t < value.size(); t++)
 				(object->*_add)(value[t]);
 		}
 
 		static std::vector<T> get(obj* object)
 		{
 			std::vector<T> vect;
-			for(size_t t = 0; t < (object->*_getSize)(); t++)
+			for(uint32 t = 0; t < (object->*_getSize)(); t++)
 				vect.push_back((object->*_getAt)(t));
 			return vect;
 		}

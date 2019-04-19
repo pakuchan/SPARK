@@ -69,7 +69,7 @@ namespace IRR
 	
 		// Initializes the index array
 		buffer->positionAtStart();
-		for (size_t i = 0; i < group.getCapacity(); ++i)
+		for (uint32 i = 0; i < group.getCapacity(); ++i)
 			buffer->setNextIndex(i);
 		buffer->getMeshBuffer().setDirty(irr::scene::EBT_INDEX);
 

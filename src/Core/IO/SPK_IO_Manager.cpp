@@ -165,7 +165,7 @@ namespace IO
 	{
 		std::string result(str);
 
-		for (size_t i = 0; i < str.size(); ++i)
+		for (uint32 i = 0; i < str.size(); ++i)
 			result[i] = tolower(str[i]);
 
 		return result;

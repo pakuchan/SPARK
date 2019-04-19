@@ -60,7 +60,7 @@ namespace IRR
 		buffer->positionAtStart();
 
 		// Initializes the index array
-		for (size_t i = 0; i < group.getCapacity(); ++i)
+		for (uint32 i = 0; i < group.getCapacity(); ++i)
 		{
 			buffer->setNextIndex(NB_VERTICES_PER_PARTICLE * i + 0);
             buffer->setNextIndex(NB_VERTICES_PER_PARTICLE * i + 1);
@@ -71,7 +71,7 @@ namespace IRR
 		}
 
 		// Initializes the texture array
-		for (size_t i = 0; i < group.getCapacity(); ++i)
+		for (uint32 i = 0; i < group.getCapacity(); ++i)
 		{
 			buffer->setNextTexCoords(0.0f,0.0f);
 			buffer->setNextTexCoords(1.0f,0.0f);

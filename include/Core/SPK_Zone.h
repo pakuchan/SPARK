@@ -109,7 +109,7 @@ namespace SPK
 		Vector3D tPosition;
 
 		typedef bool (Zone::*checkFn)(const Particle&,Vector3D* normal) const;
-		static const size_t NB_TEST_TYPES = 6;
+		static const uint32 NB_TEST_TYPES = 6;
 		static checkFn TEST_FN[NB_TEST_TYPES];
 
 		bool checkInside(const Particle& particle,Vector3D* normal) const;

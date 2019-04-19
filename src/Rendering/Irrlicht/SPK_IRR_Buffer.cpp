@@ -28,7 +28,7 @@ namespace SPK
 {
 namespace IRR
 {
-	IRRBuffer::IRRBuffer(irr::IrrlichtDevice* device,size_t nbParticles,size_t nbVerticesPerParticle,size_t nbIndicesPerParticle) :
+	IRRBuffer::IRRBuffer(irr::IrrlichtDevice* device,uint32 nbParticles,uint32 nbVerticesPerParticle,uint32 nbIndicesPerParticle) :
 		RenderBuffer(),
 		device(device),
 		meshBuffer(NULL),
@@ -40,9 +40,9 @@ namespace IRR
 		currentColorIndex(0),
 		currentTexCoordIndex(0)
 	{
-		SPK_ASSERT(nbParticles > 0,"IRRBuffer::IRRBuffer(irr::IrrlichtDevice*,irr::scene::E_PRIMITIVE_TYPE,size_t) - The number of particles cannot be 0");
-		SPK_ASSERT(nbVerticesPerParticle > 0,"IRRBuffer::IRRBuffer(irr::IrrlichtDevice*,irr::scene::E_PRIMITIVE_TYPE,size_t) - The number of vertices per particle cannot be 0");
-		SPK_ASSERT(nbIndicesPerParticle > 0,"IRRBuffer::IRRBuffer(irr::IrrlichtDevice*,irr::scene::E_PRIMITIVE_TYPE,size_t) - The number of indices per particle cannot be 0");
+		SPK_ASSERT(nbParticles > 0,"IRRBuffer::IRRBuffer(irr::IrrlichtDevice*,irr::scene::E_PRIMITIVE_TYPE,uint32) - The number of particles cannot be 0");
+		SPK_ASSERT(nbVerticesPerParticle > 0,"IRRBuffer::IRRBuffer(irr::IrrlichtDevice*,irr::scene::E_PRIMITIVE_TYPE,uint32) - The number of vertices per particle cannot be 0");
+		SPK_ASSERT(nbIndicesPerParticle > 0,"IRRBuffer::IRRBuffer(irr::IrrlichtDevice*,irr::scene::E_PRIMITIVE_TYPE,uint32) - The number of indices per particle cannot be 0");
 
 		meshBuffer = new irr::scene::CDynamicMeshBuffer(irr::video::EVT_STANDARD,getIndiceType());
 			
@@ -59,7 +59,7 @@ namespace IRR
 		meshBuffer->drop();
 	}
 
-	void IRRBuffer::setUsed(size_t nb)
+	void IRRBuffer::setUsed(uint32 nb)
 	{
 		if (nb > nbParticles) // Prevents the buffers from growing too much
 		{

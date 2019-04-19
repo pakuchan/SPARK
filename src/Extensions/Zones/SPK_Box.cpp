@@ -38,7 +38,7 @@ namespace SPK
 		dimensions(box.dimensions),
 		halfDimensions(box.halfDimensions)
 	{
-		for (size_t i = 0; i < 3; ++i)
+		for (uint32 i = 0; i < 3; ++i)
 		{
 			axis[i] = box.axis[i];
 			tAxis[i] = box.tAxis[i];
@@ -78,7 +78,7 @@ namespace SPK
 		axis[0].normalize();
 		axis[1] = crossProduct(axis[0],axis[2]);
 
-		for (size_t i = 0; i < 3; ++i)
+		for (uint32 i = 0; i < 3; ++i)
 		{
 			transformDir(tAxis[i],axis[i]);
 			tAxis[i].normalize();
@@ -96,8 +96,8 @@ namespace SPK
 		else
 		{
 			Vector3D randomDim(SPK_RANDOM(-halfDimensions,halfDimensions));
-			size_t n = SPK_RANDOM(0,6);		// a random number from 0 to 5 included
-			size_t axis = n >> 1;			// 1 chance out of 3
+			uint32 n = SPK_RANDOM(0,6);		// a random number from 0 to 5 included
+			uint32 axis = n >> 1;			// 1 chance out of 3
 			int dir = ((n & 1) << 1) - 1;	// -1 or 1
 			randomDim[axis] = dir * halfDimensions[axis];
 			return randomDim;
@@ -109,14 +109,14 @@ namespace SPK
 		Vector3D randomDim(generateRandomDim(full,radius));
 
 		v = getTransformedPosition();
-		for (size_t i = 0; i < 3; ++i)
+		for (uint32 i = 0; i < 3; ++i)
 			v += randomDim[i] * tAxis[i];
 	}
 
 	bool Box::contains(const Vector3D& v,float radius) const
 	{
 		Vector3D d(v - getTransformedPosition());
-		for (size_t i = 0; i < 3; ++i)
+		for (uint32 i = 0; i < 3; ++i)
 			if (std::abs(dotProduct(tAxis[i],d)) - radius > halfDimensions[i])
 				return false;
 		return true;
@@ -148,7 +148,7 @@ namespace SPK
 		float minRatio = std::numeric_limits<float>::max();
 		bool intersect = false;
 
-		for (size_t i = 0; i < 3; ++i) 
+		for (uint32 i = 0; i < 3; ++i) 
 		{
 			float dist0 = dotProduct(tAxis[i],d0);
 			float dist1 = dotProduct(tAxis[i],d1);
@@ -185,14 +185,14 @@ namespace SPK
 
 		Vector3D d(v - getTransformedPosition());
 		Vector3D ratio(MAX_FLOAT,MAX_FLOAT,MAX_FLOAT);
-		for (size_t i = 0; i < 3; ++i)
+		for (uint32 i = 0; i < 3; ++i)
 			if (halfDimensions[i] > 0.0f)
 				ratio[i] = dotProduct(tAxis[i],d) / halfDimensions[i];
 		
 		Vector3D absRatio(ratio);
 		absRatio.abs();
 
-		size_t axisIndex = 0;
+		uint32 axisIndex = 0;
 		if (absRatio.y > absRatio.x) axisIndex = 1;
 		if (absRatio.z > absRatio[axisIndex]) axisIndex = 2;
 
@@ -203,7 +203,7 @@ namespace SPK
 	{
 		Zone::innerUpdateTransform();
 		
-		for (size_t i = 0; i < 3; ++i)
+		for (uint32 i = 0; i < 3; ++i)
 		{
 			transformDir(tAxis[i],axis[i]);
 			tAxis[i].normalize();

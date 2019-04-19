@@ -58,7 +58,7 @@ namespace SPK
 
 	public :
 
-		static Ref<Group> create(size_t capacity = 100);
+		static Ref<Group> create(uint32 capacity = 100);
 		~Group();
 
 		bool isInitialized() const;
@@ -91,26 +91,26 @@ namespace SPK
 
 		bool isEnabled(Param param) const;
 
-		size_t getNbParticles() const;
-		size_t getCapacity() const;
+		uint32 getNbParticles() const;
+		uint32 getCapacity() const;
 
-		Particle getParticle(size_t index);
-		const Particle getParticle(size_t index) const;
+		Particle getParticle(uint32 index);
+		const Particle getParticle(uint32 index) const;
 
-		void reallocate(size_t capacity);
+		void reallocate(uint32 capacity);
 		void empty();
 
 		void addEmitter(const Ref<Emitter>& emitter);
 		void removeEmitter(const Ref<Emitter>& emitter);
 		void removeAllEmitters();
-		const Ref<Emitter>& getEmitter(size_t index) const;
-		size_t getNbEmitters() const;
+		const Ref<Emitter>& getEmitter(uint32 index) const;
+		uint32 getNbEmitters() const;
 
 		void addModifier(const Ref<Modifier>& modifier);
 		void removeModifier(const Ref<Modifier>& modifier);
 		void removeAllModifiers();
-		const Ref<Modifier>& getModifier(size_t index) const;
-		size_t getNbModifiers() const;
+		const Ref<Modifier>& getModifier(uint32 index) const;
+		uint32 getNbModifiers() const;
 
 		void setRenderer(const Ref<Renderer>& renderer);
 		const Ref<Renderer>& getRenderer() const;
@@ -370,7 +370,7 @@ namespace SPK
 	public :
 		spark_description(Group, Transformable)
 		(
-			spk_attribute(unsigned int, capacity, reallocate, getCapacity);
+			spk_attribute(uint32, capacity, reallocate, getCapacity);
 			spk_attribute(Pair<float>, lifeTime, setLifeTime, getMinLifeTime, getMaxLifeTime);
 			spk_attribute(bool, immortal, setImmortal, isImmortal);
 			spk_attribute(bool, still, setStill, isStill);
@@ -393,7 +393,7 @@ namespace SPK
 
 	private :
 
-		static const size_t NB_PARAMETERS = 5;
+		static const uint32 NB_PARAMETERS = 5;
 		static const float DEFAULT_VALUES[NB_PARAMETERS];
 
 		// This holds the structure of arrays (SOA) containing data of particles
@@ -401,8 +401,8 @@ namespace SPK
 		{
 			bool initialized;
 
-			size_t nbParticles;
-			size_t maxParticles;
+			uint32 nbParticles;
+			uint32 maxParticles;
 
 			// Particles attributes
 			Vector3D* positions;
@@ -431,7 +431,7 @@ namespace SPK
 				sqrDists(NULL),
 				colors(NULL)
 			{
-				for (size_t i = 0; i < NB_PARAMETERS; ++i)
+				for (uint32 i = 0; i < NB_PARAMETERS; ++i)
 					parameters[i] = NULL;
 			}
 		};
@@ -439,9 +439,9 @@ namespace SPK
 		struct WeakEmitterPair
 		{
 			Emitter* obj;
-			size_t nbBorn;
+			uint32 nbBorn;
 
-			WeakEmitterPair(const Ref<Emitter>& obj,size_t nbBorn) :
+			WeakEmitterPair(const Ref<Emitter>& obj,uint32 nbBorn) :
 				obj(obj.get()),
 				nbBorn(nbBorn)
 			{}
@@ -534,8 +534,8 @@ namespace SPK
 		System* system;
 
 		ParticleData particleData;
-		size_t enabledParamIndices[NB_PARAMETERS];
-		size_t nbEnabledParameters;
+		uint32 enabledParamIndices[NB_PARAMETERS];
+		uint32 nbEnabledParameters;
 
 		ColorInterpolatorDef colorInterpolator;
 		FloatInterpolatorDef paramInterpolators[NB_PARAMETERS];
@@ -571,19 +571,19 @@ namespace SPK
 
 		Octree* octree;
 
-		Group(const Ref<System>& system = SPK_NULL_REF,size_t capacity = 100);
+		Group(const Ref<System>& system = SPK_NULL_REF,uint32 capacity = 100);
 		Group(const Group& group);
 
 		bool updateParticles(float deltaTime);
 		void renderParticles();
 
-		bool initParticle(size_t index,size_t& emitterIndex,size_t& nbManualBorn);
-		void swapParticles(size_t index0,size_t index1);
+		bool initParticle(uint32 index,uint32& emitterIndex,uint32& nbManualBorn);
+		void swapParticles(uint32 index0,uint32 index1);
 
 		void recomputeEnabledParamIndices();
 
 		template<typename T>
-		void reallocateArray(T*& t,size_t newSize,size_t copySize);
+		void reallocateArray(T*& t,uint32 newSize,uint32 copySize);
 
 		DataSet* attachDataSet(DataHandler* dataHandler);
 		void detachDataSet(DataSet* dataHandler);
@@ -614,13 +614,13 @@ namespace SPK
 		void initData();
 	};
 
-	inline Ref<Group> Group::create(size_t capacity)
+	inline Ref<Group> Group::create(uint32 capacity)
 	{
 		return SPK_NEW(Group,SPK_NULL_REF,capacity);
 	}
 
 	template<typename T>
-	void Group::reallocateArray(T*& t,size_t newSize,size_t copySize)
+	void Group::reallocateArray(T*& t,uint32 newSize,uint32 copySize)
 	{
 		T* oldT = t;
 		t = SPK_NEW_ARRAY(T,newSize);
@@ -734,12 +734,12 @@ namespace SPK
 		return particleData.parameters[param] != NULL;
 	}
 
-	inline size_t Group::getNbParticles() const
+	inline uint32 Group::getNbParticles() const
 	{
 		return particleData.nbParticles;
 	}
 
-	inline size_t Group::getCapacity() const
+	inline uint32 Group::getCapacity() const
 	{
 		return particleData.maxParticles;
 	}
@@ -749,26 +749,26 @@ namespace SPK
 		particleData.nbParticles = 0;
 	}
 
-	inline const Ref<Emitter>& Group::getEmitter(size_t index) const
+	inline const Ref<Emitter>& Group::getEmitter(uint32 index) const
 	{
-		SPK_ASSERT(index < getNbEmitters(),"Group::getEmitter(size_t) - Index of emitter is out of bounds : " << index);
+		SPK_ASSERT(index < getNbEmitters(),"Group::getEmitter(uint32) - Index of emitter is out of bounds : " << index);
 		return emitters[index];
 	}
 
-	inline size_t Group::getNbEmitters() const
+	inline uint32 Group::getNbEmitters() const
 	{
-		return emitters.size();
+		return static_cast<uint32>(emitters.size());
 	}
 
-	inline const Ref<Modifier>& Group::getModifier(size_t index) const
+	inline const Ref<Modifier>& Group::getModifier(uint32 index) const
 	{
-		SPK_ASSERT(index < getNbModifiers(),"Group::geModifier(size_t) - Index of modifier is out of bounds : " << index);
+		SPK_ASSERT(index < getNbModifiers(),"Group::geModifier(uint32) - Index of modifier is out of bounds : " << index);
 		return modifiers[index].obj;
 	}
 
-	inline size_t Group::getNbModifiers() const
+	inline uint32 Group::getNbModifiers() const
 	{
-		return modifiers.size();
+		return static_cast<uint32>(modifiers.size());
 	}
 
 	inline const Ref<Renderer>& Group::getRenderer() const

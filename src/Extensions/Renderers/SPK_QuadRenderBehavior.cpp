@@ -34,7 +34,7 @@ namespace SPK
 		textureAtlasH(1.0f)
 	{}
 
-	void QuadRenderBehavior::setAtlasDimensions(size_t nbX,size_t nbY)
+	void QuadRenderBehavior::setAtlasDimensions(uint32 nbX,uint32 nbY)
 	{
 		textureAtlasNbX = nbX;
 		textureAtlasNbY = nbY;

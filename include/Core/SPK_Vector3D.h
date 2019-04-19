@@ -198,17 +198,17 @@ namespace SPK
 		* @param index : the index of the coordinate to get (from 0 to 2)
 		* @return : the coordinate value at index
 		*/
-		float& operator[](size_t index);
+		float& operator[](uint32 index);
 
 		/**
 		* @brief Accesses the Vector3D coordinates in an container like fashion
 		*
-		* This is the constant version of operator[](size_t)
+		* This is the constant version of operator[](uint32)
 		*
 		* @param index : the index of the coordinate to get (from 0 to 2)
 		* @return : the coordinate value at index
 		*/
-		const float& operator[](size_t index) const;
+		const float& operator[](uint32 index) const;
 
 		/////////////
 		// Setters //
@@ -665,7 +665,7 @@ namespace SPK
 		return *this;
 	}
 
-	inline float& Vector3D::operator[](size_t index)
+	inline float& Vector3D::operator[](uint32 index)
 	{
 		switch(index)
 		{
@@ -675,7 +675,7 @@ namespace SPK
 		}
 	}
 
-	inline const float& Vector3D::operator[](size_t index) const
+	inline const float& Vector3D::operator[](uint32 index) const
 	{
 		switch(index)
 		{

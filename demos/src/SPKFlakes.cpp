@@ -255,7 +255,7 @@ int main(int argc, char *argv[])
 
 			// if space is pressed
 			if ((event.type == SDL_KEYDOWN)&&(event.key.keysym.sym == SDLK_SPACE))
-				for (size_t i = 0; i < particleGroup->getNbParticles(); ++i)
+				for (SPK::uint32 i = 0; i < particleGroup->getNbParticles(); ++i)
 					particleGroup->getParticle(i).velocity() = SPK::Vector3D(SPK_RANDOM(-0.5f,0.5f),SPK_RANDOM(-0.5f,0.5f),SPK_RANDOM(-0.5f,0.5f));
 
 			// Moves the camera with the mouse

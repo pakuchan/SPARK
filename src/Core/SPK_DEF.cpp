@@ -50,7 +50,7 @@ namespace SPK
 		// Inits the random seed
 		randomSeed = static_cast<unsigned int>(std::time(NULL));
 		// little tweak to ensure the randomSeed is uniformly distributed along all the range
-		for (size_t i = 0; i < 2; ++i)
+		for (uint32 i = 0; i < 2; ++i)
 			randomSeed = generateRandom(static_cast<unsigned int>(1),std::numeric_limits<unsigned int>::max());
 	}
 

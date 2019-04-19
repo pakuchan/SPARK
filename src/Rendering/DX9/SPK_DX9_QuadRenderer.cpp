@@ -87,7 +87,7 @@ namespace DX9
 				{
 					float t[8] = {0.0f,0.0f,1.0f,0.0f,1.0f,1.0f,0.0f,1.0f};
 					buffer.lock(TEXCOORD_LOCK);
-					for (size_t i = 0; i < group.getCapacity() << 3; ++i)
+					for (uint32 i = 0; i < group.getCapacity() << 3; ++i)
 						buffer.setNextTexCoord(t[i & 7]);
 					buffer.unlock();
 				}
@@ -128,7 +128,7 @@ namespace DX9
 				buffer.setNbTexCoords(3);
 				float t[12] = {0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,1.0f,1.0f,0.0f,0.0f,1.0f,0.0f};
 				buffer.lock(TEXCOORD_LOCK);
-				for (size_t i = 0; i < group.getCapacity() * 12; ++i)
+				for (uint32 i = 0; i < group.getCapacity() * 12; ++i)
 					buffer.setNextTexCoord(t[i % 12]);
 				buffer.unlock();
 			}

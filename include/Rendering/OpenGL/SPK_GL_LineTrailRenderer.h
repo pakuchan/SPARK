@@ -64,7 +64,7 @@ namespace GL
 		* @brief Creates a new GLLineTrailRenderer
 		* @return A new GLLineTrailRenderer
 		*/
-		static Ref<GLLineTrailRenderer> create(size_t nbSamples = 8,float duration = 1.0f,float width = 1.0f);
+		static Ref<GLLineTrailRenderer> create(uint32 nbSamples = 8,float duration = 1.0f,float width = 1.0f);
 
 		///////////////
 		// nbSamples //
@@ -78,13 +78,13 @@ namespace GL
 		*
 		* @param nbSamples : the number of samples to construct the trails
 		*/
-		void setNbSamples(size_t nbSamples);
+		void setNbSamples(uint32 nbSamples);
 
 		/**
 		* @brief Gets the number of samples per trail
 		* @return the number of samples per trail
 		*/
-		size_t getNbSamples() const;
+		uint32 getNbSamples() const;
 
 		//////////////
 		// duration //
@@ -146,13 +146,13 @@ namespace GL
 	private :
 
 		// Data indices
-		static const size_t NB_DATA = 4;
-		static const size_t VERTEX_BUFFER_INDEX = 0;
-		static const size_t COLOR_BUFFER_INDEX = 1;
-		static const size_t AGE_DATA_INDEX = 2;
-		static const size_t START_ALPHA_DATA_INDEX = 3;
+		static const uint32 NB_DATA = 4;
+		static const uint32 VERTEX_BUFFER_INDEX = 0;
+		static const uint32 COLOR_BUFFER_INDEX = 1;
+		static const uint32 AGE_DATA_INDEX = 2;
+		static const uint32 START_ALPHA_DATA_INDEX = 3;
 
-		size_t nbSamples;
+		uint32 nbSamples;
 
 		float width;
 		float duration;
@@ -163,7 +163,7 @@ namespace GL
 		// Constructor //
 		/////////////////
 
-		GLLineTrailRenderer(size_t nbSamples = 8,float duration = 1.0f,float width = 1.0f);
+		GLLineTrailRenderer(uint32 nbSamples = 8,float duration = 1.0f,float width = 1.0f);
 		GLLineTrailRenderer(const GLLineTrailRenderer& renderer);
 
 		virtual void init(const Particle& particle,DataSet* dataSet) const;
@@ -173,12 +173,12 @@ namespace GL
 		virtual void computeAABB(Vector3D& AABBMin,Vector3D& AABBMax,const Group& group,const DataSet* dataSet) const;
 	};
 
-	inline Ref<GLLineTrailRenderer> GLLineTrailRenderer::create(size_t nbSamples,float duration,float width)
+	inline Ref<GLLineTrailRenderer> GLLineTrailRenderer::create(uint32 nbSamples,float duration,float width)
 	{
 		return SPK_NEW(GLLineTrailRenderer,nbSamples,duration,width);
 	}
 
-	inline size_t GLLineTrailRenderer::getNbSamples() const
+	inline uint32 GLLineTrailRenderer::getNbSamples() const
 	{
 		return nbSamples;
 	}
