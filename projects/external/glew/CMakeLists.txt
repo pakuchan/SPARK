@@ -11,6 +11,11 @@
 # ###############################################
 cmake_minimum_required(VERSION 2.8)
 project(GLEW)
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+	set(SPARK_OPENGL_LIB "GL" CACHE STRING "The name of the library file of OpenGL.")
+else()
+	set(SPARK_OPENGL_LIB "opengl32" CACHE STRING "The name of the library file of OpenGL.")
+endif()
 
 
 
@@ -24,20 +29,20 @@ set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR}${SPARK_GENERATOR_P
 get_filename_component(SPARK_DIR ${SPARK_DIR}/void REALPATH)
 get_filename_component(SPARK_DIR ${SPARK_DIR} PATH)
 file(GLOB_RECURSE SRC_FILES
-	${SPARK_DIR}/external/glew/src/*.c
-	${SPARK_DIR}/external/glew/src/*.cpp
-	${SPARK_DIR}/external/glew/src/*.cxx
-	${SPARK_DIR}/external/glew/src/*.h
-	${SPARK_DIR}/external/glew/src/*.hpp
+	${SPARK_DIR}/external/glew/src/glew.c
+	${SPARK_DIR}/external/glew/src/glew.h
 )
 
 
 
 # Build step
 # ###############################################
-add_definitions(-DGLEW_STATIC)
-add_library(GLEW STATIC ${SRC_FILES})
+add_definitions(-DGLEW_BUILD)
+add_library(GLEW SHARED ${SRC_FILES})
 include_directories(${SPARK_DIR}/external/glew/src)
+target_link_libraries(GLEW
+	general ${SPARK_OPENGL_LIB}
+)
 set_target_properties(GLEW PROPERTIES
 	OUTPUT_NAME glew
 	DEBUG_POSTFIX _d
