@@ -30,6 +30,7 @@ add_subdirectory(core core)
 add_subdirectory(irr irr)
 add_subdirectory(ogl ogl)
 add_subdirectory(dx9 dx9)
+add_subdirectory(gles2 gles2)
 add_subdirectory(../external external)
 
 
