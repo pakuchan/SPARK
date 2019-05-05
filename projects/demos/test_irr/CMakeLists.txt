@@ -36,14 +36,15 @@ if(NOT CMAKE_GENERATOR_PLATFORM STREQUAL "")
 	set(SPARK_GENERATOR_POSTFIX " ${CMAKE_GENERATOR_PLATFORM}")
 endif()
 set(SPARK_GENERATOR "(${CMAKE_SYSTEM_NAME}@${CMAKE_GENERATOR}${SPARK_GENERATOR_POSTFIX})")
-add_definitions(-DSPK_IMPORT)
 include_directories(${SPARK_DIR}/include)
 include_directories(${DEMOS_IRRLICHT_INCLUDE_DIR})
 get_filename_component(DEMOS_IRRLICHT_LIB_DIR ${DEMOS_IRRLICHT_LIB_DIR} REALPATH)
 link_directories(${DEMOS_IRRLICHT_LIB_DIR})
 if(${DEMOS_USE_STATIC_LIBS})
 	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/static)
+	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/external/pugixml)
 else()
+	add_definitions(-DSPK_IMPORT)
 	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/dynamic)
 endif()
 add_executable(Test_Irrlicht ${SRC_FILES})
@@ -59,6 +60,12 @@ else()
 		optimized SPARK
 		optimized SPARK_IRR
 		optimized ${DEMOS_IRRLICHT_LIB}
+	)
+endif()
+if(${DEMOS_USE_STATIC_LIBS})
+	target_link_libraries(Test_Irrlicht
+		debug pugixml_d
+		optimized pugixml
 	)
 endif()
 set_target_properties(Test_Irrlicht PROPERTIES

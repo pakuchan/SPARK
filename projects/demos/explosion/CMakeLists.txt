@@ -35,10 +35,14 @@ include_directories(${SPARK_DIR}/include)
 include_directories(${SPARK_DIR}/demos/external/SDL/include)
 link_directories(${SPARK_DIR}/demos/external/SDL/${LIB_DIR_NAME})
 if(${DEMOS_USE_STATIC_LIBS})
+	add_definitions(-DGLEW_STATIC)
 	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/static)
+	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/external_static/glew)
+	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/external/pugixml)
 else()
 	add_definitions(-DSPK_IMPORT)
 	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/dynamic)
+	link_directories(${SPARK_DIR}/lib/${SPARK_GENERATOR}/external/glew)
 endif()
 add_executable(Explosion
 	${SRC_FILES}
@@ -53,6 +57,14 @@ target_link_libraries(Explosion
 	optimized SPARK
 	optimized SPARK_GL
 )
+if(${DEMOS_USE_STATIC_LIBS})
+	target_link_libraries(Explosion
+		debug pugixml_d
+		debug glew_d
+		optimized pugixml
+		optimized glew
+	)
+endif()
 set_target_properties(Explosion PROPERTIES
 	DEBUG_POSTFIX _debug
 	RUNTIME_OUTPUT_DIRECTORY ${SPARK_DIR}/demos/${BIN_DIR_NAME}
